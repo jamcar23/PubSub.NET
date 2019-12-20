@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubSub.NET", "PubSub.NET\PubSub.NET.csproj", "{83D17D8E-9158-4814-A75C-CE1C12961500}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PubSub.NET", "PubSub.NET\PubSub.NET.csproj", "{83D17D8E-9158-4814-A75C-CE1C12961500}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{DBA6DB86-33C1-41FE-88A3-3BDE3F7A2518}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3393554F-F0E5-4D73-A074-2E52081B741C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubSub.NET.Tests", "PubSub.NET.Tests\PubSub.NET.Tests.csproj", "{D1325D54-ADC2-4644-8CF3-702592ACC18F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +21,17 @@ Global
 		{83D17D8E-9158-4814-A75C-CE1C12961500}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83D17D8E-9158-4814-A75C-CE1C12961500}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83D17D8E-9158-4814-A75C-CE1C12961500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1325D54-ADC2-4644-8CF3-702592ACC18F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1325D54-ADC2-4644-8CF3-702592ACC18F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1325D54-ADC2-4644-8CF3-702592ACC18F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1325D54-ADC2-4644-8CF3-702592ACC18F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{83D17D8E-9158-4814-A75C-CE1C12961500} = {DBA6DB86-33C1-41FE-88A3-3BDE3F7A2518}
+		{D1325D54-ADC2-4644-8CF3-702592ACC18F} = {3393554F-F0E5-4D73-A074-2E52081B741C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BA811C4-9839-452F-993D-C47A8809DE5C}
