@@ -22,7 +22,15 @@ namespace PubSub.NET.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="listener">The method to be executed when data of type T is published.</param>
-        /// <returns></returns>
+        /// <returns>Returns true if the listener was added.</returns>
         bool Subscribe<T>(Action<T> listener);
+
+        /// <summary>
+        /// Stop listening for some type of data.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="listener"></param>
+        /// <returns>Returns true if the listener was removed.</returns>
+        bool Unsubscribe<T>(Action<T> listener);
     }
 }
