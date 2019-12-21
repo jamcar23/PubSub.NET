@@ -3,6 +3,23 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
+    <Authors>James Carroll</Authors>
+    <PackageLicenseExpression />
+    <Copyright>Copyright (c) 2019 James Carroll (jamcar23)</Copyright>
+    <Description>A lightweight library to help use the pub / sub pattern with C# delegates.</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>key.pfx</AssemblyOriginatorKeyFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>https://github.com/jamcar23/PubSub.NET</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
