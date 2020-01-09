@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PubSub.NET.Core
+namespace PubSubNET.Core
 {
     /// <summary>
     /// Common definition for classes that manage publishing / subscribing to events / data.

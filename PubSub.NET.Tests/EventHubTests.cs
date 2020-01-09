@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using PubSub.NET.Core;
 using PubSub.NET.Tests.Utils;
+using PubSubNET.Core;
 
 namespace PubSub.NET.Tests
 {
