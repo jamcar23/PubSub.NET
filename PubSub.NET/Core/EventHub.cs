@@ -7,39 +7,55 @@ namespace PubSubNET.Core
 {
     public class EventHub : IEventHub
     {
-        private readonly Dictionary<int, Delegate> _subs = new Dictionary<int, Delegate>();
+        private readonly Dictionary<int, HashSet<IWeakDelegate>> _subs = new Dictionary<int, HashSet<IWeakDelegate>>();
 
         #region Publish
-        public void Publish<T>(T data) { (GetSubscriberSet<Action<T>>() as Action<T>)?.Invoke(data); }
+        public void Publish<T>(T data)
+        {
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T>>())
+            {
+                (weakDel.Listener as Action<T>)?.Invoke(data);
+            }
+        }
 
         public void Publish<T1, T2>(T1 data1, T2 data2)
-        { (GetSubscriberSet<Action<T1, T2>>() as Action<T1, T2>)?.Invoke(data1, data2); }
+        {
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2>>())
+            {
+                (weakDel.Listener as Action<T1, T2>)?.Invoke(data1, data2);
+            }
+        }
 
         public void Publish<T1, T2, T3>(T1 data1, T2 data2, T3 data3)
-        { (GetSubscriberSet<Action<T1, T2, T3>>() as Action<T1, T2, T3>)?.Invoke(data1, data2, data3); }
+        {
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3>)?.Invoke(data1, data2, data3);
+            }
+        }
 
         public void Publish<T1, T2, T3, T4>(T1 data1, T2 data2, T3 data3, T4 data4)
-        { (GetSubscriberSet<Action<T1, T2, T3, T4>>() as Action<T1, T2, T3, T4>)?.Invoke(data1, data2, data3, data4); }
+        {
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4>)?.Invoke(data1, data2, data3, data4);
+            }
+        }
 
         public void Publish<T1, T2, T3, T4, T5>(T1 data1, T2 data2, T3 data3, T4 data4, T5 data5)
         {
-            (GetSubscriberSet<Action<T1, T2, T3, T4, T5>>() as
-                Action<T1, T2, T3, T4, T5>)?.Invoke(data1,
-                                                    data2,
-                                                    data3,
-                                                    data4,
-                                                    data5);
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4, T5>)?.Invoke(data1, data2, data3, data4, data5);
+            }
         }
 
         public void Publish<T1, T2, T3, T4, T5, T6>(T1 data1, T2 data2, T3 data3, T4 data4, T5 data5, T6 data6)
         {
-            (GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6>>() as
-                Action<T1, T2, T3, T4, T5, T6>)?.Invoke(data1,
-                                                        data2,
-                                                        data3,
-                                                        data4,
-                                                        data5,
-                                                        data6);
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6>)?.Invoke(data1, data2, data3, data4, data5, data6);
+            }
         }
 
         public void Publish<T1, T2, T3, T4, T5, T6, T7>(T1 data1,
@@ -50,14 +66,10 @@ namespace PubSubNET.Core
                                                         T6 data6,
                                                         T7 data7)
         {
-            (GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7>>() as
-                Action<T1, T2, T3, T4, T5, T6, T7>)?.Invoke(data1,
-                                                            data2,
-                                                            data3,
-                                                            data4,
-                                                            data5,
-                                                            data6,
-                                                            data7);
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7>)?.Invoke(data1, data2, data3, data4, data5, data6, data7);
+            }
         }
 
         public void Publish<T1, T2, T3, T4, T5, T6, T7, T8>(T1 data1,
@@ -69,15 +81,17 @@ namespace PubSubNET.Core
                                                             T7 data7,
                                                             T8 data8)
         {
-            (GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8>>() as
-                Action<T1, T2, T3, T4, T5, T6, T7, T8>)?.Invoke(data1,
-                                                                data2,
-                                                                data3,
-                                                                data4,
-                                                                data5,
-                                                                data6,
-                                                                data7,
-                                                                data8);
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8>)?.Invoke(data1,
+                                                                        data2,
+                                                                        data3,
+                                                                        data4,
+                                                                        data5,
+                                                                        data6,
+                                                                        data7,
+                                                                        data8);
+            }
         }
 
         public void Publish<T1, T2, T3, T4, T5, T6, T7, T8, T9>(T1 data1,
@@ -90,16 +104,18 @@ namespace PubSubNET.Core
                                                                 T8 data8,
                                                                 T9 data9)
         {
-            (GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9>>() as
-                Action<T1, T2, T3, T4, T5, T6, T7, T8, T9>)?.Invoke(data1,
-                                                                    data2,
-                                                                    data3,
-                                                                    data4,
-                                                                    data5,
-                                                                    data6,
-                                                                    data7,
-                                                                    data8,
-                                                                    data9);
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9>)?.Invoke(data1,
+                                                                            data2,
+                                                                            data3,
+                                                                            data4,
+                                                                            data5,
+                                                                            data6,
+                                                                            data7,
+                                                                            data8,
+                                                                            data9);
+            }
         }
 
         public void Publish<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(T1 data1,
@@ -113,17 +129,19 @@ namespace PubSubNET.Core
                                                                      T9 data9,
                                                                      T10 data10)
         {
-            (GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>() as
-                Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>)?.Invoke(data1,
-                                                                         data2,
-                                                                         data3,
-                                                                         data4,
-                                                                         data5,
-                                                                         data6,
-                                                                         data7,
-                                                                         data8,
-                                                                         data9,
-                                                                         data10);
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>)?.Invoke(data1,
+                                                                                 data2,
+                                                                                 data3,
+                                                                                 data4,
+                                                                                 data5,
+                                                                                 data6,
+                                                                                 data7,
+                                                                                 data8,
+                                                                                 data9,
+                                                                                 data10);
+            }
         }
 
         public void Publish<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(T1 data1,
@@ -138,18 +156,20 @@ namespace PubSubNET.Core
                                                                           T10 data10,
                                                                           T11 data11)
         {
-            (GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>() as
-                Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>)?.Invoke(data1,
-                                                                              data2,
-                                                                              data3,
-                                                                              data4,
-                                                                              data5,
-                                                                              data6,
-                                                                              data7,
-                                                                              data8,
-                                                                              data9,
-                                                                              data10,
-                                                                              data11);
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>)?.Invoke(data1,
+                                                                                      data2,
+                                                                                      data3,
+                                                                                      data4,
+                                                                                      data5,
+                                                                                      data6,
+                                                                                      data7,
+                                                                                      data8,
+                                                                                      data9,
+                                                                                      data10,
+                                                                                      data11);
+            }
         }
 
         public void Publish<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(T1 data1,
@@ -165,19 +185,21 @@ namespace PubSubNET.Core
                                                                                T11 data11,
                                                                                T12 data12)
         {
-            (GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>() as
-                Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>)?.Invoke(data1,
-                                                                                   data2,
-                                                                                   data3,
-                                                                                   data4,
-                                                                                   data5,
-                                                                                   data6,
-                                                                                   data7,
-                                                                                   data8,
-                                                                                   data9,
-                                                                                   data10,
-                                                                                   data11,
-                                                                                   data12);
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>)?.Invoke(data1,
+                                                                                           data2,
+                                                                                           data3,
+                                                                                           data4,
+                                                                                           data5,
+                                                                                           data6,
+                                                                                           data7,
+                                                                                           data8,
+                                                                                           data9,
+                                                                                           data10,
+                                                                                           data11,
+                                                                                           data12);
+            }
         }
 
         public void Publish<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(T1 data1,
@@ -194,20 +216,22 @@ namespace PubSubNET.Core
                                                                                     T12 data12,
                                                                                     T13 data13)
         {
-            (GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>() as
-                Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>)?.Invoke(data1,
-                                                                                        data2,
-                                                                                        data3,
-                                                                                        data4,
-                                                                                        data5,
-                                                                                        data6,
-                                                                                        data7,
-                                                                                        data8,
-                                                                                        data9,
-                                                                                        data10,
-                                                                                        data11,
-                                                                                        data12,
-                                                                                        data13);
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>)?.Invoke(data1,
+                                                                                                data2,
+                                                                                                data3,
+                                                                                                data4,
+                                                                                                data5,
+                                                                                                data6,
+                                                                                                data7,
+                                                                                                data8,
+                                                                                                data9,
+                                                                                                data10,
+                                                                                                data11,
+                                                                                                data12,
+                                                                                                data13);
+            }
         }
 
         public void Publish<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(T1 data1,
@@ -225,21 +249,23 @@ namespace PubSubNET.Core
                                                                                          T13 data13,
                                                                                          T14 data14)
         {
-            (GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>() as
-                Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>)?.Invoke(data1,
-                                                                                             data2,
-                                                                                             data3,
-                                                                                             data4,
-                                                                                             data5,
-                                                                                             data6,
-                                                                                             data7,
-                                                                                             data8,
-                                                                                             data9,
-                                                                                             data10,
-                                                                                             data11,
-                                                                                             data12,
-                                                                                             data13,
-                                                                                             data14);
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>)?.Invoke(data1,
+                                                                                                     data2,
+                                                                                                     data3,
+                                                                                                     data4,
+                                                                                                     data5,
+                                                                                                     data6,
+                                                                                                     data7,
+                                                                                                     data8,
+                                                                                                     data9,
+                                                                                                     data10,
+                                                                                                     data11,
+                                                                                                     data12,
+                                                                                                     data13,
+                                                                                                     data14);
+            }
         }
 
         public void Publish<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(T1 data1,
@@ -258,22 +284,24 @@ namespace PubSubNET.Core
                                                                                               T14 data14,
                                                                                               T15 data15)
         {
-            (GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>() as
-                Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>)?.Invoke(data1,
-                                                                                                  data2,
-                                                                                                  data3,
-                                                                                                  data4,
-                                                                                                  data5,
-                                                                                                  data6,
-                                                                                                  data7,
-                                                                                                  data8,
-                                                                                                  data9,
-                                                                                                  data10,
-                                                                                                  data11,
-                                                                                                  data12,
-                                                                                                  data13,
-                                                                                                  data14,
-                                                                                                  data15);
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>)?.Invoke(data1,
+                                                                                                          data2,
+                                                                                                          data3,
+                                                                                                          data4,
+                                                                                                          data5,
+                                                                                                          data6,
+                                                                                                          data7,
+                                                                                                          data8,
+                                                                                                          data9,
+                                                                                                          data10,
+                                                                                                          data11,
+                                                                                                          data12,
+                                                                                                          data13,
+                                                                                                          data14,
+                                                                                                          data15);
+            }
         }
 
         public void Publish<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(T1 data1,
@@ -293,23 +321,25 @@ namespace PubSubNET.Core
                                                                                                    T15 data15,
                                                                                                    T16 data16)
         {
-            (GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>() as
-                Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>)?.Invoke(data1,
-                                                                                                       data2,
-                                                                                                       data3,
-                                                                                                       data4,
-                                                                                                       data5,
-                                                                                                       data6,
-                                                                                                       data7,
-                                                                                                       data8,
-                                                                                                       data9,
-                                                                                                       data10,
-                                                                                                       data11,
-                                                                                                       data12,
-                                                                                                       data13,
-                                                                                                       data14,
-                                                                                                       data15,
-                                                                                                       data16);
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>())
+            {
+                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>)?.Invoke(data1,
+                                                                                                               data2,
+                                                                                                               data3,
+                                                                                                               data4,
+                                                                                                               data5,
+                                                                                                               data6,
+                                                                                                               data7,
+                                                                                                               data8,
+                                                                                                               data9,
+                                                                                                               data10,
+                                                                                                               data11,
+                                                                                                               data12,
+                                                                                                               data13,
+                                                                                                               data14,
+                                                                                                               data15,
+                                                                                                               data16);
+            }
         }
 
         #endregion
@@ -348,7 +378,8 @@ namespace PubSubNET.Core
 
         public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        private bool SubscribeImpl<TSub, TDel>(TSub subscriber, TDel listener) where TSub : class where TDel : Delegate => GetSubscriberSet<TDel>().Add(listener);
+        private bool SubscribeImpl<TSub, TDel>(TSub subscriber, TDel listener) where TSub : class where TDel : Delegate 
+            => GetSubscriberSet<TDel>().Add(new WeakDelegate(subscriber, listener));
 
         #endregion
 
@@ -394,10 +425,7 @@ namespace PubSubNET.Core
 
             if (_subs.ContainsKey(key))
             {
-                Delegate oldDel = _subs[key];
-                _subs[key] = Delegate.Remove(_subs[key], listener);
-
-                return oldDel != _subs[key];
+                return _subs[key].RemoveWhere(weakDel => weakDel.Contains(subscriber, listener)) > 0;
             }
 
             return false;
@@ -406,13 +434,16 @@ namespace PubSubNET.Core
         #endregion
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Delegate GetSubscriberSet<T>()
+        private HashSet<IWeakDelegate> GetSubscriberSet<T>()
         {
             int key = GetKey<T>();
 
-            if (!_subs.TryGetValue(key, out Delegate del))
+            _subs.TryGetValue(key, out HashSet<IWeakDelegate> subsSet);
+
+            if (subsSet == null)
             {
-                _subs.Add(key, null);
+                subsSet = new HashSet<IWeakDelegate>();
+                _subs.Add(key, subsSet);
             }
 
             return del;
