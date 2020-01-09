@@ -316,94 +316,81 @@ namespace PubSubNET.Core
 
         #region Subscribe
 
-        public bool Subscribe<T>(Action<T> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1>(TSub subscriber, Action<T1> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2>(Action<T1, T2> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2>(TSub subscriber, Action<T1, T2> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3>(Action<T1, T2, T3> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3>(TSub subscriber, Action<T1, T2, T3> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4>(Action<T1, T2, T3, T4> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4>(TSub subscriber, Action<T1, T2, T3, T4> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4, T5>(Action<T1, T2, T3, T4, T5> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4, T5>(TSub subscriber, Action<T1, T2, T3, T4, T5> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4, T5, T6>(Action<T1, T2, T3, T4, T5, T6> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4, T5, T6, T7>(Action<T1, T2, T3, T4, T5, T6, T7> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6, T7>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4, T5, T6, T7, T8>(Action<T1, T2, T3, T4, T5, T6, T7, T8> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        public bool Subscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> listener) => SubscribeImpl(listener);
+        public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
-        private bool SubscribeImpl<T>(T listener)
-            where T : Delegate
-        {
-            Delegate subs = GetSubscriberSet<T>();
-
-            if (subs?.GetInvocationList().Contains(listener) ?? false)
-                return false;
-
-            int key = GetKey<T>();
-
-            Delegate oldDel = _subs[key];
-            _subs[key] = Delegate.Combine(_subs[key], listener);
-
-            return oldDel != _subs[key];
-        }
+        private bool SubscribeImpl<TSub, TDel>(TSub subscriber, TDel listener) where TSub : class where TDel : Delegate => GetSubscriberSet<TDel>().Add(listener);
 
         #endregion
 
         #region Unsubscribe
 
-        public bool Unsubscribe<T>(Action<T> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1>(TSub subscriber, Action<T1> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2>(Action<T1, T2> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2>(TSub subscriber, Action<T1, T2> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3>(Action<T1, T2, T3> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3>(TSub subscriber, Action<T1, T2, T3> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4>(Action<T1, T2, T3, T4> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4>(TSub subscriber, Action<T1, T2, T3, T4> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4, T5>(Action<T1, T2, T3, T4, T5> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4, T5>(TSub subscriber, Action<T1, T2, T3, T4, T5> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4, T5, T6>(Action<T1, T2, T3, T4, T5, T6> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4, T5, T6, T7>(Action<T1, T2, T3, T4, T5, T6, T7> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4, T5, T6, T7, T8>(Action<T1, T2, T3, T4, T5, T6, T7, T8> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        public bool Unsubscribe<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> listener) => UnsubscribeImpl(listener);
+        public bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> listener) where TSub : class => UnsubscribeImpl(subscriber, listener);
 
-        private bool UnsubscribeImpl<T>(T listener)
-            where T : Delegate
+        private bool UnsubscribeImpl<TSub, TDel>(TSub subscriber, TDel listener)
+            where TSub : class
+            where TDel : Delegate
         {
-            int key = GetKey<T>();
+            int key = GetKey<TDel>();
 
             if (_subs.ContainsKey(key))
             {
