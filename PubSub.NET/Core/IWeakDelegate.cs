@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PubSubNET.Core
 {
-    internal interface IWeakDelegate
+    public interface IWeakDelegate : IDisposable
     {
         bool IsSubscriberAlive { get; }
 
