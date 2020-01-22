@@ -18,9 +18,3 @@ jobs:
           nuget_key: ${{secrets.NUGET_API_KEY}} # nuget.org API key
           project_dir: PubSub.NET # Defaults to repository root
         #   tag_format: v* # [*] gets replaced with version
-      
-      # Github Releases
-      - name: Semantic Releaser
-        uses: brpaz/action-semantic-release@v1
-        # with:
-        #   install_plugins: "@semantic-release/commit-analyzer @semantic-release/releases-notes-generator @semantic-release/github"
