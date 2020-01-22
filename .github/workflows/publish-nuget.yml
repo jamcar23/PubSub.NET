@@ -10,11 +10,6 @@ jobs:
     steps:
       # Checkout
       - uses: actions/checkout@v2
-
-      # Github Releases
-      - name: Semantic Releaser
-        uses: brpaz/action-semantic-release@v1
-
       
       # Publish
       - name: Publish if version is updated
@@ -23,4 +18,9 @@ jobs:
           nuget_key: ${{secrets.NUGET_API_KEY}} # nuget.org API key
           project_dir: PubSub.NET # Defaults to repository root
         #   tag_format: v* # [*] gets replaced with version
-            
+      
+      # Github Releases
+      - name: Semantic Releaser
+        uses: brpaz/action-semantic-release@v1
+        with:
+          install_plugins: "commit-analyzer releases-notes-generator github"
