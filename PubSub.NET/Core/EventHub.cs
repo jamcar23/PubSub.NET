@@ -358,9 +358,10 @@ namespace PubSubNET.Core
 
             int key = GetKey<T>();
 
+            Delegate oldDel = _subs[key];
             _subs[key] = Delegate.Combine(_subs[key], listener);
 
-            return true;
+            return oldDel != _subs[key];
         }
 
         #endregion

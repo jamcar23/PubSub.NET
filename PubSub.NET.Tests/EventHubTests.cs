@@ -11,7 +11,7 @@ namespace PubSubNET.Tests
         [Test]
         public void TestPubSub()
         {
-            IEventHub hub = new EventHub();
+            IEventHub hub = EventHub;
 
             Assert.IsTrue(hub.Subscribe<int>(i =>
             {
@@ -24,7 +24,7 @@ namespace PubSubNET.Tests
         [Test]
         public void TestPubNoSub()
         {
-            IEventHub hub = new EventHub();
+            IEventHub hub = EventHub;
 
             Assert.DoesNotThrow(() => hub.Publish(42));
             Assert.Pass();
@@ -33,7 +33,7 @@ namespace PubSubNET.Tests
         [Test]
         public void TestPubMultiSubUsingMethods()
         {
-            IEventHub hub = new EventHub();
+            IEventHub hub = EventHub;
             Box<int> box = new Box<int>(0);
 
             Assert.IsTrue(hub.Subscribe<Box<int>>(IncrementBox));
@@ -46,7 +46,7 @@ namespace PubSubNET.Tests
         [Test]
         public void TestPubMultiSubUsingLambdas()
         {
-            IEventHub hub = new EventHub();
+            IEventHub hub = EventHub;
             Box<int> box = new Box<int>(0);
 
             Assert.IsTrue(hub.Subscribe<Box<int>>(b => b.Value++));
@@ -59,7 +59,7 @@ namespace PubSubNET.Tests
         [Test]
         public void TestSubUnsubUsingMethods()
         {
-            IEventHub hub = new EventHub();
+            IEventHub hub = EventHub;
 
             Assert.IsTrue(hub.Subscribe<Box<int>>(IncrementBox));
             Assert.IsTrue(hub.Unsubscribe<Box<int>>(IncrementBox));
@@ -68,7 +68,7 @@ namespace PubSubNET.Tests
         [Test]
         public void TestNoSubUnsubUsingMethods()
         {
-            IEventHub hub = new EventHub();
+            IEventHub hub = EventHub;
 
             Assert.IsFalse(hub.Unsubscribe<Box<int>>(IncrementBox));
         }
@@ -78,7 +78,7 @@ namespace PubSubNET.Tests
         // todo look into whether or not this should be a supported feature; fixing this will make TestPubMultiSubUsingLambdas fail
         public void TestSubUnsubUsingLambdas() 
         {
-            IEventHub hub = new EventHub();
+            IEventHub hub = EventHub;
             Box<int> box = new Box<int>(0);
 
             Assert.IsTrue(hub.Subscribe<Box<int>>(b => b.Value++));
@@ -88,7 +88,7 @@ namespace PubSubNET.Tests
         [Test]
         public void TestUnsubscribingDuringPublishing()
         {
-            IEventHub hub = new EventHub();
+            IEventHub hub = EventHub;
 
             Assert.IsTrue(hub.Subscribe<IEventHub>(UnsubInsideThisMethod));
             Assert.DoesNotThrow(() => hub.Publish(hub));
