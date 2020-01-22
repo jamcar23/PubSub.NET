@@ -23,6 +23,6 @@ jobs:
         uses: rohith/publish-nuget@v1.2.0
         with: # All inputs are optional (details given below)
           nuget_key: ${{secrets.NUGET_API_KEY}} # nuget.org API key
-        #   project_dir: src # Defaults to repository root
+          project_dir: PubSub.NET # Defaults to repository root
         #   tag_format: v* # [*] gets replaced with version
             
