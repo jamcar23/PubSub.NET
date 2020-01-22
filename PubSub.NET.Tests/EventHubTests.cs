@@ -73,8 +73,8 @@ namespace PubSub.NET.Tests
         }
 
         [Test]
-        // todo not possible using hashsets since each lambda is a different instance with different hashcodes
-        // todo look into whether or not this should be a supported feature
+        // todo doesn't seem possible since each lambda is a different instance and thus a different method
+        // todo look into whether or not this should be a supported feature; fixing this will make TestPubMultiSubUsingLambdas fail
         public void TestSubUnsubUsingLambdas() 
         {
             EventHub hub = new EventHub();
@@ -84,7 +84,21 @@ namespace PubSub.NET.Tests
             Assert.IsTrue(hub.Unsubscribe<Box<int>>(b => b.Value++));
         }
 
+        [Test]
+        public void TestUnsubscribingDuringPublishing()
+        {
+            IEventHub hub = new EventHub();
+
+            Assert.IsTrue(hub.Subscribe<IEventHub>(UnsubInsideThisMethod));
+            Assert.DoesNotThrow(() => hub.Publish(hub));
+        }
+
         private void IncrementBox(Box<int> box) => box.Value++;
         private void IncrementBox2(Box<int> box) => box.Value++;
+
+        private void UnsubInsideThisMethod(IEventHub hub)
+        {
+            hub.Unsubscribe<IEventHub>(UnsubInsideThisMethod);
+        }
     }
 }
