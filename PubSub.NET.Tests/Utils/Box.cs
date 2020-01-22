@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace PubSub.NET.Tests.Utils
+namespace PubSubNET.Tests.Utils
 {
     internal class Box<T> : IEquatable<Box<T>> where T : struct
     {
