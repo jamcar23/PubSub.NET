@@ -11,12 +11,10 @@ jobs:
       # Checkout
       - uses: actions/checkout@v2
 
-      # Optional step, add only for a specific dotnet version that doesn't come with ubuntu-latest / windows-latest
-      # Visit bit.ly/2synnZl for a list of software that comes pre-installed with ubuntu-latest / windows-latest
-#       - name: Setup dotnet
-#         uses: actions/setup-dotnet@v1
-#         with:
-#            dotnet-version: 3.1.100
+      # Github Releases
+      - name: Semantic Releaser
+        uses: brpaz/action-semantic-release@v1
+
       
       # Publish
       - name: Publish if version is updated
