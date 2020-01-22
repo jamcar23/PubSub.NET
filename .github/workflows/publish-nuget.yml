@@ -22,5 +22,5 @@ jobs:
       # Github Releases
       - name: Semantic Releaser
         uses: brpaz/action-semantic-release@v1
-        with:
-          install_plugins: "@semantic-release/commit-analyzer @semantic-release/releases-notes-generator @semantic-release/github"
+        # with:
+        #   install_plugins: "@semantic-release/commit-analyzer @semantic-release/releases-notes-generator @semantic-release/github"
