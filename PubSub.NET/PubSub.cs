@@ -1,7 +1,7 @@
-﻿using PubSub.NET.Core;
+﻿using PubSubNET.Core;
 using System;
 
-namespace PubSub.NET
+namespace PubSubNET
 {
     public static class PubSub
     {
@@ -11,7 +11,7 @@ namespace PubSub.NET
 
         public static bool RegisterEventHubImplementation(IEventHub hub)
         {
-            if(_eventHubImpl == null)
+            if (_eventHubImpl == null)
             {
                 _eventHubImpl = hub;
                 return true;

@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{DBA6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3393554F-F0E5-4D73-A074-2E52081B741C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubSub.NET.Tests", "PubSub.NET.Tests\PubSub.NET.Tests.csproj", "{D1325D54-ADC2-4644-8CF3-702592ACC18F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PubSub.NET.Tests", "PubSub.NET.Tests\PubSub.NET.Tests.csproj", "{D1325D54-ADC2-4644-8CF3-702592ACC18F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

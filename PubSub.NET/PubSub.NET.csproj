@@ -13,6 +13,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/jamcar23/PubSub.NET</RepositoryUrl>
+    <RootNamespace>PubSubNET</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

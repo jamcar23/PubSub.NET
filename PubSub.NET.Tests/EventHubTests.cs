@@ -1,16 +1,17 @@
 using NUnit.Framework;
-using PubSub.NET.Core;
-using PubSub.NET.Tests.Utils;
+using PubSubNET.Core;
+using PubSubNET.Tests.Utils;
 
-namespace PubSub.NET.Tests
+namespace PubSubNET.Tests
 {
-    public class EventHubTests
+    public abstract class EventHubTests
     {
+        protected abstract IEventHub EventHub { get; }
 
         [Test]
         public void TestPubSub()
         {
-            EventHub hub = new EventHub();
+            IEventHub hub = EventHub;
 
             Assert.IsTrue(hub.Subscribe<int>(i =>
             {
@@ -23,7 +24,7 @@ namespace PubSub.NET.Tests
         [Test]
         public void TestPubNoSub()
         {
-            EventHub hub = new EventHub();
+            IEventHub hub = EventHub;
 
             Assert.DoesNotThrow(() => hub.Publish(42));
             Assert.Pass();
@@ -32,7 +33,7 @@ namespace PubSub.NET.Tests
         [Test]
         public void TestPubMultiSubUsingMethods()
         {
-            EventHub hub = new EventHub();
+            IEventHub hub = EventHub;
             Box<int> box = new Box<int>(0);
 
             Assert.IsTrue(hub.Subscribe<Box<int>>(IncrementBox));
@@ -45,7 +46,7 @@ namespace PubSub.NET.Tests
         [Test]
         public void TestPubMultiSubUsingLambdas()
         {
-            EventHub hub = new EventHub();
+            IEventHub hub = EventHub;
             Box<int> box = new Box<int>(0);
 
             Assert.IsTrue(hub.Subscribe<Box<int>>(b => b.Value++));
@@ -58,7 +59,7 @@ namespace PubSub.NET.Tests
         [Test]
         public void TestSubUnsubUsingMethods()
         {
-            EventHub hub = new EventHub();
+            IEventHub hub = EventHub;
 
             Assert.IsTrue(hub.Subscribe<Box<int>>(IncrementBox));
             Assert.IsTrue(hub.Unsubscribe<Box<int>>(IncrementBox));
@@ -67,24 +68,38 @@ namespace PubSub.NET.Tests
         [Test]
         public void TestNoSubUnsubUsingMethods()
         {
-            EventHub hub = new EventHub();
+            IEventHub hub = EventHub;
 
             Assert.IsFalse(hub.Unsubscribe<Box<int>>(IncrementBox));
         }
 
         [Test]
-        // todo not possible using hashsets since each lambda is a different instance with different hashcodes
-        // todo look into whether or not this should be a supported feature
+        // todo doesn't seem possible since each lambda is a different instance and thus a different method
+        // todo look into whether or not this should be a supported feature; fixing this will make TestPubMultiSubUsingLambdas fail
         public void TestSubUnsubUsingLambdas() 
         {
-            EventHub hub = new EventHub();
+            IEventHub hub = EventHub;
             Box<int> box = new Box<int>(0);
 
             Assert.IsTrue(hub.Subscribe<Box<int>>(b => b.Value++));
             Assert.IsTrue(hub.Unsubscribe<Box<int>>(b => b.Value++));
         }
 
+        [Test]
+        public void TestUnsubscribingDuringPublishing()
+        {
+            IEventHub hub = EventHub;
+
+            Assert.IsTrue(hub.Subscribe<IEventHub>(UnsubInsideThisMethod));
+            Assert.DoesNotThrow(() => hub.Publish(hub));
+        }
+
         private void IncrementBox(Box<int> box) => box.Value++;
         private void IncrementBox2(Box<int> box) => box.Value++;
+
+        private void UnsubInsideThisMethod(IEventHub hub)
+        {
+            hub.Unsubscribe<IEventHub>(UnsubInsideThisMethod);
+        }
     }
 }
