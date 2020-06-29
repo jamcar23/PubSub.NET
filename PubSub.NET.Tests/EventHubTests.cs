@@ -90,7 +90,7 @@ namespace PubSubNET.Tests
         {
             IEventHub hub = EventHub;
 
-            Assert.IsTrue(hub.Subscribe<IEventHub>(UnsubInsideThisMethod));
+            Assert.IsTrue(hub.Subscribe<EventHubTests, IEventHub>(this, UnsubInsideThisMethod));
             Assert.DoesNotThrow(() => hub.Publish(hub));
         }
 
@@ -99,7 +99,7 @@ namespace PubSubNET.Tests
 
         private void UnsubInsideThisMethod(IEventHub hub)
         {
-            hub.Unsubscribe<IEventHub>(UnsubInsideThisMethod);
+            hub.Unsubscribe<EventHubTests, IEventHub>(this, UnsubInsideThisMethod);
         }
     }
 }

@@ -446,7 +446,7 @@ namespace PubSubNET.Core
                 _subs.Add(key, subsSet);
             }
 
-            return del;
+            return subsSet;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
