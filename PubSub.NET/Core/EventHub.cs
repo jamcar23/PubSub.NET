@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace PubSubNET.Core
@@ -14,7 +15,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T>>())
             {
-                (weakDel.Listener as Action<T>)?.Invoke(data);
+                weakDel?.Invoke(data);
             }
         }
 
@@ -22,7 +23,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2>>())
             {
-                (weakDel.Listener as Action<T1, T2>)?.Invoke(data1, data2);
+                weakDel?.Invoke(data1, data2);
             }
         }
 
@@ -30,7 +31,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3>)?.Invoke(data1, data2, data3);
+                weakDel?.Invoke(data1, data2, data3);
             }
         }
 
@@ -38,7 +39,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4>)?.Invoke(data1, data2, data3, data4);
+                weakDel?.Invoke(data1, data2, data3, data4);
             }
         }
 
@@ -46,7 +47,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4, T5>)?.Invoke(data1, data2, data3, data4, data5);
+                weakDel?.Invoke(data1, data2, data3, data4, data5);
             }
         }
 
@@ -54,7 +55,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6>)?.Invoke(data1, data2, data3, data4, data5, data6);
+                weakDel.Invoke(data1, data2, data3, data4, data5, data6);
             }
         }
 
@@ -68,7 +69,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7>)?.Invoke(data1, data2, data3, data4, data5, data6, data7);
+                weakDel?.Invoke(data1, data2, data3, data4, data5, data6, data7);
             }
         }
 
@@ -83,7 +84,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8>)?.Invoke(data1,
+                weakDel?.Invoke(data1,
                                                                         data2,
                                                                         data3,
                                                                         data4,
@@ -106,7 +107,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9>)?.Invoke(data1,
+                weakDel?.Invoke(data1,
                                                                             data2,
                                                                             data3,
                                                                             data4,
@@ -131,7 +132,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>)?.Invoke(data1,
+                weakDel?.Invoke(data1,
                                                                                  data2,
                                                                                  data3,
                                                                                  data4,
@@ -158,7 +159,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>)?.Invoke(data1,
+                weakDel?.Invoke(data1,
                                                                                       data2,
                                                                                       data3,
                                                                                       data4,
@@ -187,7 +188,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>)?.Invoke(data1,
+                weakDel?.Invoke(data1,
                                                                                            data2,
                                                                                            data3,
                                                                                            data4,
@@ -218,7 +219,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>)?.Invoke(data1,
+                weakDel?.Invoke(data1,
                                                                                                 data2,
                                                                                                 data3,
                                                                                                 data4,
@@ -251,7 +252,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>)?.Invoke(data1,
+                weakDel?.Invoke(data1,
                                                                                                      data2,
                                                                                                      data3,
                                                                                                      data4,
@@ -286,7 +287,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>)?.Invoke(data1,
+                weakDel?.Invoke(data1,
                                                                                                           data2,
                                                                                                           data3,
                                                                                                           data4,
@@ -323,7 +324,7 @@ namespace PubSubNET.Core
         {
             foreach (IWeakDelegate weakDel in GetSubscriberSet<Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>())
             {
-                (weakDel.Listener as Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>)?.Invoke(data1,
+                weakDel?.Invoke(data1,
                                                                                                                data2,
                                                                                                                data3,
                                                                                                                data4,
@@ -379,7 +380,7 @@ namespace PubSubNET.Core
         public bool Subscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> listener) where TSub : class => SubscribeImpl(subscriber, listener);
 
         private bool SubscribeImpl<TSub, TDel>(TSub subscriber, TDel listener) where TSub : class where TDel : Delegate 
-            => GetSubscriberSet<TDel>().Add(new WeakDelegate(subscriber, listener));
+            => GetSubscriberSet<TDel>().Add(new WeakDelegate(subscriber, listener.Target, listener.GetMethodInfo()));
 
         #endregion
 

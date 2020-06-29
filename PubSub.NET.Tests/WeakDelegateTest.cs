@@ -2,6 +2,7 @@
 using PubSubNET.Core;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace PubSubNET.Tests
@@ -11,25 +12,124 @@ namespace PubSubNET.Tests
         [Test]
         public void TestDisposeWithMethod()
         {
-            Subscriber sub = new Subscriber();
-            WeakDelegate weakDel = new WeakDelegate(sub, (Action<object>)sub.Listener);
+            WeakDelegate weakDel = null;
 
-            Assert.IsTrue(weakDel.IsSubscriberAlive);
-            Assert.IsNotNull(weakDel.Listener);
+            new Action(() =>
+            {
+                Subscriber sub = new Subscriber();
 
-            sub = null;
+                weakDel = new WeakDelegate(sub, sub, ((Action<bool>)sub.Listener).GetMethodInfo());
+
+                Assert.IsTrue(weakDel.IsSubscriberAlive);
+
+                sub = null;
+            })();
+
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
             Assert.IsFalse(weakDel.IsSubscriberAlive);
-            Assert.IsNull(weakDel.Listener);
+        }
+
+        [Test]
+        public void TestSubscriberShouldBeCollected()
+        {
+            new Action(() =>
+            {
+                Subscriber sub = new Subscriber();
+
+                PubSub.Subscribe<Subscriber, bool>(sub, sub.Listener);
+            })();
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            PubSub.Publish(true);
+        }
+
+        [Test]
+        public void TestShouldBeCollectedIfCallbackTargetIsSubscriber()
+        {
+            WeakReference wr = null;
+
+            new Action(() =>
+            {
+                Subscriber sub = new Subscriber();
+
+                wr = new WeakReference(sub);
+
+                PubSub.Subscribe<Subscriber, bool>(sub, sub.Listener);
+            })();
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            PubSub.Publish(true);
+
+            Assert.IsFalse(wr.IsAlive);
+        }
+
+        [Test]
+        public void TestNotCollectedIfSubscriberIsNotTheCallbackTarget()
+        {
+            WeakReference wr = null;
+
+            new Action(() =>
+            {
+                Subscriber sub = new Subscriber();
+
+                wr = new WeakReference(sub);
+
+                PubSub.Subscribe<Subscriber, bool>(sub, (_) => sub.MakeSuccessful());
+            })();
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            Assert.IsTrue(wr.IsAlive);
+            Assert.IsNotNull(wr.Target as Subscriber);
+            Assert.IsFalse(((Subscriber)wr.Target).Successful);
+
+            PubSub.Publish(true);
+
+            Assert.IsTrue(((Subscriber)wr.Target).Successful);
+        }
+
+        [Test]
+        public void TestSubscriberCollectableAfterUnsubscribeEvenIfHeldByClosure()
+        {
+            WeakReference wr = null;
+
+            new Action(() =>
+            {
+                Subscriber sub = new Subscriber();
+
+                wr = new WeakReference(sub);
+
+                PubSub.Subscribe<Subscriber, bool>(sub, (_) => sub.MakeSuccessful());
+            })();
+
+            Assert.IsTrue(wr.IsAlive);
+            Assert.IsNotNull(wr.Target as Subscriber);
+
+            PubSub.Unsubscribe<Subscriber, bool>(wr.Target as Subscriber, null);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private class Subscriber
         {
-            public void Listener(object obj)
-            {
+            public bool Successful { get; private set; }
 
+            public void Listener(bool b)
+            {
+                Successful = b;
+            }
+
+            public void MakeSuccessful()
+            {
+                Successful = true;
             }
         }
     }

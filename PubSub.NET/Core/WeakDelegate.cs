@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace PubSubNET.Core
@@ -7,13 +8,14 @@ namespace PubSubNET.Core
     public class WeakDelegate : IWeakDelegate
     {
         private WeakReference _subscriberReference;
-        private Delegate _listener;
+        private MaybeWeakReference _delegateSource;
+        private MethodInfo _listener;
 
         public bool IsSubscriberAlive
         {
             get
             {
-                bool isAlive = _subscriberReference?.IsAlive ?? false;
+                bool isAlive = (_subscriberReference?.IsAlive ?? false) || (_delegateSource?.IsAlive ?? false);
 
                 if (!isAlive)
                 {
@@ -24,27 +26,37 @@ namespace PubSubNET.Core
             }
         }
 
-        public Delegate Listener
-        {
-            get 
-            {
-                if (!IsSubscriberAlive)
-                {
-                    Dispose();
-                }
-
-                return _listener;
-            }
-        }
-
-        public WeakDelegate(object subscriber, Delegate listener)
+        public WeakDelegate(object subscriber, object target, MethodInfo listener)
         {
             _subscriberReference = new WeakReference(subscriber ?? throw new ArgumentNullException(nameof(subscriber)));
+            _delegateSource = new MaybeWeakReference(subscriber, target ?? throw new ArgumentNullException(nameof(target)));
             _listener = listener ?? throw new ArgumentNullException(nameof(listener));
         }
 
-        public bool Contains<TSub, TDel>(TSub subscriber, TDel listener) where TDel : Delegate => 
-            Listener != null && Listener.Equals(listener) && subscriber.Equals(_subscriberReference?.Target);
+        public bool Contains<TSub, TDel>(TSub subscriber, TDel listener) where TDel : Delegate =>
+            subscriber.Equals(_subscriberReference?.Target);
+
+        public void Invoke(params object[] args)
+        {
+            if (args?.Length != _listener.GetParameters().Length)
+            {
+                throw new ArgumentException("Invoke arguments don't match subscriber's arguments.");
+            }
+
+            if (_listener.IsStatic)
+            {
+                _listener.Invoke(null, args);
+            }
+
+            object target = _delegateSource.Target;
+
+            if (target == null)
+            {
+                return;
+            }
+
+            _listener.Invoke(target, args);
+        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -56,6 +68,7 @@ namespace PubSubNET.Core
                 if (disposing)
                 {
                     _listener = null;
+                    _delegateSource = null;
                     _subscriberReference = null;
                 }
 
@@ -81,6 +94,7 @@ namespace PubSubNET.Core
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
+
         #endregion
     }
 }
