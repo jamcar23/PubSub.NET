@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -8,7 +9,7 @@ namespace PubSubNET.Core
 {
     public class EventHub : IEventHub
     {
-        private readonly Dictionary<int, HashSet<IWeakDelegate>> _subs = new Dictionary<int, HashSet<IWeakDelegate>>();
+        private readonly ConcurrentDictionary<int, HashSet<IWeakDelegate>> _subs = new ConcurrentDictionary<int, HashSet<IWeakDelegate>>();
 
         #region Publish
         public void Publish<T>(T data)
@@ -444,7 +445,7 @@ namespace PubSubNET.Core
             if (subsSet == null)
             {
                 subsSet = new HashSet<IWeakDelegate>();
-                _subs.Add(key, subsSet);
+                _subs.TryAdd(key, subsSet);
             }
 
             return subsSet;
