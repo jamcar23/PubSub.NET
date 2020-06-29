@@ -315,37 +315,37 @@ namespace PubSubNET
 
         #region Unsubscribe
 
-        public static bool Unsubscribe<TSub, T1>(TSub subscriber, Action<T1> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2>(TSub subscriber, Action<T1, T2> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3>(TSub subscriber, Action<T1, T2, T3> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4>(TSub subscriber, Action<T1, T2, T3, T4> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5>(TSub subscriber, Action<T1, T2, T3, T4, T5> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4, T5>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4, T5, T6>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4, T5, T6, T7>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4, T5, T6, T7, T8>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(subscriber);
 
-        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(TSub subscriber, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> listener) where TSub : class => _hub.Unsubscribe(subscriber, listener);
+        public static bool Unsubscribe<TSub, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(TSub subscriber) where TSub : class => _hub.Unsubscribe<TSub, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(subscriber);
         #endregion
     }
 }

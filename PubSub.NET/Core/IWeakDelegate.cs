@@ -8,7 +8,7 @@ namespace PubSubNET.Core
     {
         bool IsSubscriberAlive { get; }
 
-        bool Contains<TSub, TDel>(TSub subscriber, TDel listener) where TDel : Delegate;
+        bool Contains<TSub>(TSub subscriber);
 
         void Invoke(params object[] args);
     }

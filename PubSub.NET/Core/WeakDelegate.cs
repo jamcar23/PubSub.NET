@@ -33,7 +33,7 @@ namespace PubSubNET.Core
             _listener = listener ?? throw new ArgumentNullException(nameof(listener));
         }
 
-        public bool Contains<TSub, TDel>(TSub subscriber, TDel listener) where TDel : Delegate =>
+        public bool Contains<TSub>(TSub subscriber) =>
             subscriber.Equals(_subscriberReference?.Target);
 
         public void Invoke(params object[] args)

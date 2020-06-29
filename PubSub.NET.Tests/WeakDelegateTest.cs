@@ -112,7 +112,7 @@ namespace PubSubNET.Tests
             Assert.IsTrue(wr.IsAlive);
             Assert.IsNotNull(wr.Target as Subscriber);
 
-            PubSub.Unsubscribe<Subscriber, bool>(wr.Target as Subscriber, null);
+            PubSub.Unsubscribe<Subscriber, bool>(wr.Target as Subscriber);
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
