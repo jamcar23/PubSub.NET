@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PubSubNET.Core
 {
-    public class WeakDelegate : IWeakDelegate
+    internal class WeakDelegate : IWeakDelegate
     {
         private WeakReference _subscriberReference;
         private MaybeWeakReference _delegateSource;

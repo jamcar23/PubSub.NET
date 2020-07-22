@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace PubSubNET.Core
 {
-    public class EventHub : IEventHub
+    internal class EventHub : IEventHub
     {
         private readonly ConcurrentDictionary<int, HashSet<IWeakDelegate>> _subs = new ConcurrentDictionary<int, HashSet<IWeakDelegate>>();
 
