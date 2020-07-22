@@ -40,6 +40,8 @@ namespace PubSubNET.Tests
             Assert.IsTrue(hub.Subscribe<EventHubTests, Box<int>>(this, IncrementBox2));
 
             hub.Publish(box);
+            hub.Unsubscribe<EventHubTests, Box<int>>(this);
+
             Assert.AreEqual(2, box.Value);
         }
 
@@ -53,6 +55,8 @@ namespace PubSubNET.Tests
             Assert.IsTrue(hub.Subscribe<EventHubTests, Box<int>>(this, b => b.Value++));
 
             hub.Publish(box);
+            hub.Unsubscribe<EventHubTests, Box<int>>(this);
+
             Assert.AreEqual(2, box.Value);
         }
 
@@ -74,8 +78,6 @@ namespace PubSubNET.Tests
         }
 
         [Test]
-        // todo doesn't seem possible since each lambda is a different instance and thus a different method
-        // todo look into whether or not this should be a supported feature; fixing this will make TestPubMultiSubUsingLambdas fail
         public void TestSubUnsubUsingLambdas() 
         {
             IEventHub hub = EventHub;
