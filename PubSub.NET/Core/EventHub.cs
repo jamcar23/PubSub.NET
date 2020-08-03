@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConcurrentCollections;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
@@ -9,13 +10,7 @@ namespace PubSubNET.Core
 {
     internal class EventHub : IEventHub
     {
-        private readonly ConcurrentDictionary<int, HashSet<IWeakDelegate>> _subs = new ConcurrentDictionary<int, HashSet<IWeakDelegate>>();
-        private readonly ConcurrentQueue<(int, WeakReference)> _unsubQueue = new ConcurrentQueue<(int, WeakReference)>();
-        private readonly ConcurrentQueue<(int, IWeakDelegate)> _subQueue = new ConcurrentQueue<(int, IWeakDelegate)>();
-
-        private long _activePublishes;
-        private long _activeUnsubscribes;
-        private long _activeSubscribes;
+        private readonly ConcurrentDictionary<int, ConcurrentHashSet<IWeakDelegate>> _subs = new ConcurrentDictionary<int, ConcurrentHashSet<IWeakDelegate>>();
 
         #region Publish
 
@@ -278,27 +273,10 @@ namespace PubSubNET.Core
         private void PublishImpl<TDel>(params object[] args)
             where TDel : Delegate
         {
-            while (Interlocked.Read(ref _activeUnsubscribes) != 0 || Interlocked.Read(ref _activeSubscribes) != 0)
+            foreach (IWeakDelegate weakDel in GetSubscriberSet<TDel>())
             {
-                continue;
+                weakDel?.Invoke(args);
             }
-
-            Interlocked.Increment(ref _activePublishes);
-
-            try
-            {
-                foreach (IWeakDelegate weakDel in GetSubscriberSet<TDel>())
-                {
-                    weakDel?.Invoke(args);
-                }
-            } 
-            finally
-            {
-                Interlocked.Decrement(ref _activePublishes);
-            }
-
-            PurgeUnsubscribeQueue();
-            PurgeSubscribeQueue();
         }
 
         #endregion Publish
@@ -370,45 +348,12 @@ namespace PubSubNET.Core
             int key = GetKey<TDel>();
             IWeakDelegate weakDel = new WeakDelegate(subscriber, listener.Target, listener.GetMethodInfo());
 
-            if (Interlocked.Read(ref _activePublishes) == 0 || !_subs.ContainsKey(key))
-            {
-                bool didSubscribe = Subscribe(key, weakDel);
-
-                PurgeSubscribeQueue();
-
-                return didSubscribe;
-            }
-            else
-            {
-                _subQueue.Enqueue((key, weakDel));
-            }
-
-            return false;
-        }
-
-        private void PurgeSubscribeQueue()
-        {
-            while (_subQueue.Count > 0 && Interlocked.Read(ref _activePublishes) == 0)
-            {
-                if (_subQueue.TryDequeue(out (int key, IWeakDelegate subscriber) t) && t.subscriber.IsSubscriberAlive)
-                {
-                    Subscribe(t.key, t.subscriber);
-                }
-            }
+            return Subscribe(key, weakDel);
         }
 
         private bool Subscribe(int key, IWeakDelegate weakDel)
         {
-            Interlocked.Increment(ref _activeSubscribes);
-
-            try
-            {
-                return GetSubscriberSet(key).Add(weakDel);
-            }
-            finally
-            {
-                Interlocked.Decrement(ref _activeSubscribes);
-            }
+            return GetSubscriberSet(key).Add(weakDel);
         }
 
         #endregion Subscribe
@@ -471,52 +416,31 @@ namespace PubSubNET.Core
 
             if (_subs.ContainsKey(key))
             {
-                if (Interlocked.Read(ref _activePublishes) == 0)
-                {
-                    bool didUnsubscribe = Unsubscribe(key, subscriber);
-
-                    PurgeUnsubscribeQueue();
-
-                    return didUnsubscribe;
-                } 
-                else
-                {
-                    _unsubQueue.Enqueue((key, new WeakReference(subscriber)));
-                }
+                return Unsubscribe(key, subscriber);
             }
 
             return false;
         }
 
-        private void PurgeUnsubscribeQueue()
-        {
-            while (_unsubQueue.Count > 0 && Interlocked.Read(ref _activePublishes) == 0)
-            {
-                if (_unsubQueue.TryDequeue(out (int key, WeakReference subscriber) t) && t.subscriber.Target != null)
-                {
-                    Unsubscribe(t.key, t.subscriber.Target);
-                }
-            }
-        }
-
         private bool Unsubscribe(int key, object subscriber)
         {
-            Interlocked.Increment(ref _activeUnsubscribes);
+            bool didRemove = false;
 
-            try
+            foreach (IWeakDelegate weakDel in _subs[key])
             {
-                return _subs[key].RemoveWhere(weakDel => weakDel.Contains(subscriber)) > 0;
+                if (weakDel.Contains(subscriber) && _subs[key].TryRemove(weakDel))
+                {
+                    didRemove = true;
+                }
             }
-            finally
-            {
-                Interlocked.Decrement(ref _activeUnsubscribes);
-            }
+
+            return didRemove;
         }
 
         #endregion Unsubscribe
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private HashSet<IWeakDelegate> GetSubscriberSet<T>()
+        private ConcurrentHashSet<IWeakDelegate> GetSubscriberSet<T>()
         {
             int key = GetKey<T>();
 
@@ -524,13 +448,13 @@ namespace PubSubNET.Core
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private HashSet<IWeakDelegate> GetSubscriberSet(int key)
+        private ConcurrentHashSet<IWeakDelegate> GetSubscriberSet(int key)
         {
-            _subs.TryGetValue(key, out HashSet<IWeakDelegate> subsSet);
+            _subs.TryGetValue(key, out ConcurrentHashSet<IWeakDelegate> subsSet);
 
             if (subsSet == null)
             {
-                subsSet = new HashSet<IWeakDelegate>();
+                subsSet = new ConcurrentHashSet<IWeakDelegate>();
                 _subs.TryAdd(key, subsSet);
             }
 

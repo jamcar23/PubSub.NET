@@ -34,7 +34,7 @@ namespace PubSubNET.Core
         }
 
         public bool Contains<TSub>(TSub subscriber) =>
-            subscriber.Equals(_subscriberReference?.Target);
+            ((object)subscriber) == _subscriberReference?.Target;
 
         public void Invoke(params object[] args)
         {

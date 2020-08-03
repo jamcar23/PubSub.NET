@@ -100,6 +100,7 @@ namespace PubSubNET.Tests
 
             hub.Publish(box);
             hub.Unsubscribe<EventHubTests, IEventHub>(this);
+            hub.Unsubscribe<EventHubTests, Box<int>>(this);
 
             Assert.AreEqual(-1, box.Value);
         }
