@@ -40,6 +40,8 @@ namespace PubSubNET.Tests
             Assert.IsTrue(hub.Subscribe<EventHubTests, Box<int>>(this, IncrementBox2));
 
             hub.Publish(box);
+            hub.Unsubscribe<EventHubTests, Box<int>>(this);
+
             Assert.AreEqual(2, box.Value);
         }
 
@@ -53,6 +55,8 @@ namespace PubSubNET.Tests
             Assert.IsTrue(hub.Subscribe<EventHubTests, Box<int>>(this, b => b.Value++));
 
             hub.Publish(box);
+            hub.Unsubscribe<EventHubTests, Box<int>>(this);
+
             Assert.AreEqual(2, box.Value);
         }
 
@@ -74,8 +78,6 @@ namespace PubSubNET.Tests
         }
 
         [Test]
-        // todo doesn't seem possible since each lambda is a different instance and thus a different method
-        // todo look into whether or not this should be a supported feature; fixing this will make TestPubMultiSubUsingLambdas fail
         public void TestSubUnsubUsingLambdas() 
         {
             IEventHub hub = EventHub;
@@ -89,9 +91,34 @@ namespace PubSubNET.Tests
         public void TestUnsubscribingDuringPublishing()
         {
             IEventHub hub = EventHub;
+            Box<int> box = new Box<int>(-1);
+
+            hub.Subscribe<EventHubTests, Box<int>>(this, IncrementBox);
 
             Assert.IsTrue(hub.Subscribe<EventHubTests, IEventHub>(this, UnsubInsideThisMethod));
             Assert.DoesNotThrow(() => hub.Publish(hub));
+
+            hub.Publish(box);
+            hub.Unsubscribe<EventHubTests, IEventHub>(this);
+            hub.Unsubscribe<EventHubTests, Box<int>>(this);
+
+            Assert.AreEqual(-1, box.Value);
+        }
+
+        [Test]
+        public void TestSubscribingDuringPublishing()
+        {
+            IEventHub hub = EventHub;
+            Box<int> box = new Box<int>(0);
+
+            Assert.IsTrue(hub.Subscribe<EventHubTests, IEventHub>(this, SubInsideThisMethod));
+            Assert.DoesNotThrow(() => hub.Publish(hub));
+
+            hub.Publish(box);
+            hub.Unsubscribe<EventHubTests, IEventHub>(this);
+            hub.Unsubscribe<EventHubTests, Box<int>>(this);
+
+            Assert.AreEqual(1, box.Value);
         }
 
         private void IncrementBox(Box<int> box) => box.Value++;
@@ -100,6 +127,13 @@ namespace PubSubNET.Tests
         private void UnsubInsideThisMethod(IEventHub hub)
         {
             hub.Unsubscribe<EventHubTests, IEventHub>(this);
+            hub.Unsubscribe<EventHubTests, Box<int>>(this);
+        }
+
+        private void SubInsideThisMethod(IEventHub hub)
+        {
+            hub.Subscribe<EventHubTests, IEventHub>(this, hub => { });
+            hub.Subscribe<EventHubTests, Box<int>>(this, IncrementBox);
         }
     }
 }

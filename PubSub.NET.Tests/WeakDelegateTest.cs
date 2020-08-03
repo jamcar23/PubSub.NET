@@ -12,7 +12,7 @@ namespace PubSubNET.Tests
         [Test]
         public void TestDisposeWithMethod()
         {
-            WeakDelegate weakDel = null;
+            IWeakDelegate weakDel = null;
 
             new Action(() =>
             {
